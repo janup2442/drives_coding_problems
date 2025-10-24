@@ -1,0 +1,77 @@
+```cpp
+#include <bits/stdc++.h>
+
+using namespace std;
+#define ll long long
+#define endl "\n";
+#define loop(a, b) for (int i = a; i < b; i++)
+    #define vll vector < long long int >
+    #define pb push_back
+#define ppb pop_back
+
+vector<int> expand(int n){
+    vector<int> res ; 
+    while(n>=10){
+        res.push_back(n%10);
+        n/=10;
+    }
+    
+    if(n) res.push_back(n);
+    return res;
+}
+
+pair<int,int> addDigit(int n1,int n2,int carry){
+    pair<int,int>p ;
+    if(n1+n2+carry > 9){
+        p.second = (n1+n2+carry)%10;
+        p.first = (n1+n2+carry) - p.second;
+    }else{
+        return {0,n1+n2+carry};
+    }
+    
+    return p;
+}
+
+
+void solve(){
+    int n1,n2 ;
+    cin>>n1>>n2;
+    int cnt = 0 ;
+    
+    vector<int> num1 = expand(n1) ;
+    vector<int> num2 = expand(n2) ;
+    
+    int n1Sz = num1.size();
+    int n2Sz = num2.size();
+    auto it1 = num1.rbegin();
+    auto it2 = num2.rbegin();
+    int carry = 0;
+    for(int i = min(n1Sz,n2Sz)-1 ;i>=0;i--){
+        pair<int,int >  p = addDigit(*it1,*it2,carry);
+        if(p.first){
+            cnt++;
+            carry = p.first;
+        }
+        it1++;
+        it2++;
+    }
+    
+    cout <<cnt<<endl;
+    
+}
+
+int main() {
+    // your code goes here
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    
+    
+    int t ; cin>>t ;
+    while(t--){
+        solve();
+    }
+    
+    
+    return 0;
+}
+```
